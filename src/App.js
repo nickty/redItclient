@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     getAllData().then((d) => {
-      setData(d.data.results);
+      setData(d);
     });
   }, []);
   // console.log(data);
@@ -34,12 +34,12 @@ function App() {
       <List
         grid={{
           gutter: 12,
-          xs: 5,
-          sm: 5,
-          md: 5,
+          xs: 2,
+          sm: 2,
+          md: 3,
           lg: 5,
           xl: 5,
-          xxl: 3,
+          xxl: 5,
         }}
         pagination={{
           showSizeChanger: false,
