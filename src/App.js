@@ -2,29 +2,47 @@ import logo from "./logo.svg";
 import "./App.css";
 import "antd/dist/antd.css";
 import { useEffect, useState } from "react";
-import { Card, List, Input, Space } from "antd";
+import { Card, List, Input } from "antd";
 import { getAllData } from "./services/GetFimlsService";
 const { Search } = Input;
 
 function App() {
-  // console.log(getAllData());
-
   const [data, setData] = useState();
 
+  // Loading data for the first time
   useEffect(() => {
     getAllData().then((d) => {
       setData(d);
     });
   }, []);
-  // console.log(data);
 
-  const onSearch = (value) => console.log(value);
+  // Search function
+  const arraySearch = (array, keyword) => {
+    const searchTerm = keyword.toLowerCase();
+    return array.filter((value) => {
+      return value.name.toLowerCase().match(new RegExp(searchTerm, "g"));
+    });
+  };
+
+  // filtering data
+  const handleOnChange = async (e) => {
+    console.log("search value", e);
+    if (e.length > 2) {
+      let search = await arraySearch(data, e);
+      setData(search);
+    } else {
+      getAllData().then((d) => {
+        setData(d);
+      });
+    }
+  };
+
   return (
     <div className="App">
       {/* <header className="App-header"> */}
       <Search
         placeholder="input search text"
-        onSearch={onSearch}
+        onSearch={handleOnChange}
         style={{
           width: 200,
           alignItems: "end",
