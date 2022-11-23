@@ -26,9 +26,10 @@ function App() {
 
   // filtering data
   const handleOnChange = async (e) => {
-    console.log("search value", e);
-    if (e.length > 2) {
-      let search = await arraySearch(data, e);
+    console.log("search value", e.target.value);
+    if (e.target.value.length > 0) {
+      let search = await arraySearch(data, e.target.value);
+      console.log("search data", search);
       setData(search);
     } else {
       getAllData().then((d) => {
@@ -39,10 +40,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <header className="App-header"> */}
       <Search
         placeholder="input search text"
-        onSearch={handleOnChange}
+        onChange={handleOnChange}
         style={{
           width: 200,
           alignItems: "end",
@@ -75,7 +75,6 @@ function App() {
           </List.Item>
         )}
       />
-      {/* </header> */}
     </div>
   );
 }
